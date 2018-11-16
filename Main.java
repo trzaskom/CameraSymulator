@@ -78,6 +78,12 @@ public class Main extends Application {
                     camera.loadInitial();
                     drawImage();
                     break;
+                case NUMPAD1:
+                    camera.setCentreOfGravityMethod(true);
+                    break;
+                case NUMPAD3:
+                    camera.setCentreOfGravityMethod(false);
+                    break;
                 default:
                     break;
             }

@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by miki on 2018-10-20.
@@ -11,6 +12,7 @@ public class Camera {
     private int focalDistance;
     private List<Vector<Point3D>> vectorList3D;
     private List<Wall> wallList = new ArrayList<>();
+    private boolean centreOfGravityMethod = true;
 
     private Camera() {
         focalDistance = 450;
@@ -162,14 +164,39 @@ public class Camera {
         }
     }
 
-    public List<Wall> sort(List<Wall> walllist){
-
-        return walllist;
-    }
-
     public List<Wall> getWallList() {
-        Collections.sort(wallList, Collections.reverseOrder());
-        return wallList;
+        List<Wall> sortedWallList = sort();
+        return sortedWallList;
     }
 
+    public List<Wall> sort(){
+        if (centreOfGravityMethod) {
+            Collections.sort(wallList, Collections.reverseOrder());
+            return wallList;
+        }else {
+            List<Wall> sortedWallList = new ArrayList<>();
+            sortedWallList.add(wallList.get(0));
+            for (Wall wallToAdd : wallList.subList(1,wallList.size())){
+                for (int i = 0; i < sortedWallList.size(); i++){
+                    if (sortedWallList.get(i).getzMax() < wallToAdd.getzMin()) {
+                        sortedWallList.add(i, wallToAdd);
+                        break;
+                    }
+                    else{
+                        if (i == sortedWallList.size()-1) {
+                            sortedWallList.add(wallToAdd);
+                            break;
+                        }
+                        else
+                            continue;
+                    }
+                }
+            }
+            return sortedWallList;
+        }
+    }
+
+    public void setCentreOfGravityMethod(boolean centreOfGravityMethod) {
+        this.centreOfGravityMethod = centreOfGravityMethod;
+    }
 }
