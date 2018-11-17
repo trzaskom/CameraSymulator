@@ -187,8 +187,6 @@ public class Camera {
                             sortedWallList.add(wallToAdd);
                             break;
                         }
-                        else
-                            continue;
                     }
                 }
             }
